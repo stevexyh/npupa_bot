@@ -226,10 +226,13 @@ def init_button(dp):
 ################################################################################
 if __name__ == "__main__":
     tk.TOKEN_FILE = '../token'
+    PROXY = True
+    PROXY_CONFIG = {'proxy_url': 'socks5://127.0.0.1:1081/'}
+
     updater = Updater(
         token=tk.get_token(),
         use_context=True,
-        request_kwargs={'proxy_url': 'socks5://127.0.0.1:1081/'}
+        request_kwargs=PROXY_CONFIG if PROXY else None
     )
 
     # Get the dispatcher to register handlers

@@ -33,6 +33,8 @@ from functions import button_handler as btn
 from functions import token as tk
 msg.PARSE_MODE = 'MarkdownV2'
 tk.TOKEN_FILE = './token'
+PROXY = True
+PROXY_CONFIG = {'proxy_url': 'socks5://127.0.0.1:1081/'}
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -55,7 +57,7 @@ def main():
     updater = Updater(
         token=tk.get_token(),
         use_context=True,
-        request_kwargs={'proxy_url': 'socks5://127.0.0.1:1081/'}
+        request_kwargs=PROXY_CONFIG if PROXY else None
     )
 
     # Get the dispatcher to register handlers
