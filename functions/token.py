@@ -17,6 +17,6 @@ def get_token():
     '''Get token from files'''
     token = ''
     with open(TOKEN_FILE, 'r') as f:
-        token = f.readline()
+        token = f.readline().strip()
 
     return token
