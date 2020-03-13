@@ -226,7 +226,7 @@ def init_button(dp):
 ################################################################################
 if __name__ == "__main__":
     tk.TOKEN_FILE = '../token'
-    PROXY = True
+    PROXY = True if input('是否使用代理?[0]否, [1*]是\n') in ('', '1') else False
     PROXY_CONFIG = {'proxy_url': 'socks5://127.0.0.1:1081/'}
 
     updater = Updater(

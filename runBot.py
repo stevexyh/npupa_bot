@@ -33,7 +33,7 @@ from functions import button_handler as btn
 from functions import token as tk
 msg.PARSE_MODE = 'MarkdownV2'
 tk.TOKEN_FILE = './token'
-PROXY = True
+PROXY = True if input('是否使用代理?[0]否, [1*]是\n') in ('', '1') else False
 PROXY_CONFIG = {'proxy_url': 'socks5://127.0.0.1:1081/'}
 
 # Enable logging
