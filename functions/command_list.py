@@ -10,7 +10,7 @@
 * GitHub       : https://github.com/Steve-Xyh
 '''
 
-
+import random
 from telegram.ext import CommandHandler
 from .message_handler import bot_print
 
@@ -51,19 +51,19 @@ def meow(update, context):
 
 def poem(update, context):
     """Send a message when the command /poem is issued."""
-    bot_print(update, '苟利国家生死以, 岂因祸福避趋之 Θ..Θ')
+    poem_list = [
+        '苟利国家生死以, 岂因祸福避趋之。 Θ..Θ',
+        '垂死病中惊坐起, 谈笑风生又一年。+1s',
+        '稻花香里说丰年, 听取人生经验。🐸',
+    ]
+    message = random.choice(poem_list)
+
+    bot_print(update, message)
 
 
 def secret(update, context):
     """Send a message when the command /secret is issued."""
     bot_print(update, '黄哲臭猪🐷')
-
-
-def bot_print_replace_all(text):
-    """(暂时不用)将所有符号转义输出"""
-    res = text.replace('_', '\_').replace('*', '\*').replace('[', '\[').replace(']', '\]').replace('(', '\(').replace(')', '\)').replace('~', '\~').replace('`', '\`').replace(
-        '>', '\>').replace('#', '\#').replace('+', '\+').replace('-', '\-').replace('=', '\=').replace('|', '\|').replace('{', '\{').replace('}', '\}').replace('.', '\.').replace('!', '\!')
-    print(res)
 
 
 def init_command(dp):

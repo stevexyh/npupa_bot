@@ -12,10 +12,11 @@
 
 
 import random
-from telegram.ext import Updater
-from telegram.ext import CommandHandler, CallbackQueryHandler
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Updater, Filters
+from telegram.ext import CommandHandler, CallbackQueryHandler, MessageHandler
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ChatPermissions
 from . import token as tk
+from .message_handler import bot_print
 ############################### Keyboards ############################################
 
 
@@ -25,21 +26,77 @@ def start(update, context):
     message = '入群检测'
     keyboard = [[InlineKeyboardButton('开始验证', callback_data='main')]]
 
+    restrict_user(update, context)
+
     update.message.reply_text(
         text=message,
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
 
-def main_menu(update, context):
-    '''主菜单'''
+def restrict_user(update, context):
+    '''禁言用户'''
+    bot = context.bot
+    target_user = update.message.new_chat_members[0]
+
+    permission = ChatPermissions(
+        can_send_messages=False,
+        can_send_media_messages=False,
+        can_send_polls=False,
+        can_send_other_messages=False,
+        can_add_web_page_previews=False,
+        can_change_info=False,
+        can_invite_users=False,
+        can_pin_messages=False,
+    )
+
+    bot.restrict_chat_member(
+        chat_id=update.message.chat_id,
+        user_id=target_user.id,
+        permissions=permission
+    )
+
+    bot_print(
+        update,
+        '已禁言用户【' + str(target_user.full_name) + '】'
+    )
+
+
+def revoke_restrict_user(update, context):
+    '''解除禁言'''
     query = update.callback_query
     bot = context.bot
+    target_user = query.message.reply_to_message.new_chat_members[0]
 
-    message = '萌新请选择一个验证问题'
-    question_list = random.sample(['q1', 'q2', 'q3'], 3)
+    permission = ChatPermissions(
+        can_send_messages=True,
+        can_send_media_messages=True,
+        can_send_polls=True,
+        can_send_other_messages=True,
+        can_add_web_page_previews=True,
+    )
 
-    keyboard = [[InlineKeyboardButton('问题1', callback_data=question_list[0])],
+    bot.restrict_chat_member(
+        chat_id=query.message.chat_id,
+        user_id=target_user.id,
+        permissions=permission
+    )
+
+    bot_print(
+        query,
+        '已将用户【' + str(target_user.full_name) + '】解除禁言'
+    )
+
+
+def main_menu(update, context):
+    '''主菜单'''
+    query=update.callback_query
+    bot=context.bot
+
+    message='萌新请选择一个验证问题'
+    question_list=random.sample(['q1', 'q2', 'q3'], 3)
+
+    keyboard=[[InlineKeyboardButton('问题1', callback_data = question_list[0])],
                 [InlineKeyboardButton('问题2', callback_data=question_list[1])],
                 [InlineKeyboardButton('问题3', callback_data=question_list[2])]]
 
@@ -190,6 +247,8 @@ def true_handler(update, context):
     message = '回答正确, 检测通过'
     keyboard = InlineKeyboardMarkup([])
 
+    revoke_restrict_user(update, context)
+
     bot.edit_message_text(
         chat_id=query.message.chat_id,
         message_id=query.message.message_id,
@@ -202,7 +261,7 @@ def false_handler(update, context):
     query = update.callback_query
     bot = context.bot
 
-    message = '回答错误, 领取飞机票一张'
+    message = '回答错误, 准备领取飞机票一张'
     keyboard = InlineKeyboardMarkup([])
 
     bot.edit_message_text(
@@ -214,6 +273,8 @@ def false_handler(update, context):
 
 
 def init_button(dp):
+    dp.add_handler(MessageHandler(
+        Filters.status_update.new_chat_members, start))
     dp.add_handler(CommandHandler('start', start))
     dp.add_handler(CallbackQueryHandler(main_menu, pattern='main'))
     dp.add_handler(CallbackQueryHandler(true_handler, pattern='true'))
