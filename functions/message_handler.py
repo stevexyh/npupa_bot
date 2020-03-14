@@ -19,7 +19,7 @@ PARSE_MODE = 'MarkdownV2'
 def bot_print(update, text):
     """向聊天窗口发消息"""
     try:
-        text = text.replace('-', '\-').replace('.', '\.').replace('!', '\!').replace('=', '\=')
+        text = text.replace('-', '\-').replace('.', '\.').replace('!', '\!').replace('=', '\=').replace('+', '\+')
         update.message.reply_text(text, parse_mode=PARSE_MODE)
     except:
         text += '\n' + '-'*10 + '\nMarkdown解析失败, 显示原始文本'

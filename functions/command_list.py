@@ -78,4 +78,4 @@ def init_command(dp):
 
 if __name__ == "__main__":
     print(start.__doc__)
-    bot_print_replace_all(commands)
+    # bot_print_replace_all(commands)
