@@ -23,6 +23,7 @@ commands = '''
 /meow - 喵
 /poem - 念诗
 /secret - 告诉你一个秘密
+/random - 拯救选择恐惧症
 *
 '''
 
