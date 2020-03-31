@@ -147,6 +147,9 @@ def init_app(dp):
         entry_points=[
             CommandHandler('random', start_random),
             MessageHandler(Filters.regex('.*什么*'), start_random),
+            MessageHandler(Filters.regex('.*哪个*'), start_random),
+            MessageHandler(Filters.regex('.*哪里*'), start_random),
+            MessageHandler(Filters.regex('.*要不要*'), start_random),
         ],
 
         states={
