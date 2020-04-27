@@ -30,9 +30,8 @@ import logging
 from telegram.ext import Updater
 from functions import command_list as cmd
 from functions import message_handler as msg
-from functions import button_handler as btn
 from functions import token as tk
-from apps import random_choice
+from apps import random_choice, check_new_member
 msg.PARSE_MODE = 'MarkdownV2'
 tk.TOKEN_FILE = './token'
 PROXY = False if os.sys.platform.lower() == 'linux' else True
@@ -69,8 +68,8 @@ def main():
 
     # Init functions
     random_choice.init_app(dp)
+    check_new_member.init_app(dp)
     cmd.init_command(dp)
-    btn.init_button(dp)
     msg.init_message(dp)
 
     # log all errors

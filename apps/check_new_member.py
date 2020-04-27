@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 '''
-* File Name    : button_handler.py
-* Description  : Handle some forms
+* File Name    : check_new_member.py
+* Description  : Handle new group members by questions
 * Create Time  : 2020-03-13 12:15:25
-* Version      : 1.0
+* Version      : 1.1
 * Author       : Steve X
 * GitHub       : https://github.com/Steve-Xyh
 '''
@@ -15,8 +15,8 @@ import random
 from telegram.ext import Updater, Filters
 from telegram.ext import CommandHandler, CallbackQueryHandler, MessageHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ChatPermissions
-from . import token as tk
-from .message_handler import bot_print
+from functions import token as tk
+from functions.message_handler import bot_print
 ############################### Keyboards ############################################
 
 
@@ -272,7 +272,7 @@ def false_handler(update, context):
     )
 
 
-def init_button(dp):
+def init_app(dp):
     dp.add_handler(MessageHandler(
         Filters.status_update.new_chat_members, start))
     dp.add_handler(CommandHandler('start', start))
@@ -298,7 +298,7 @@ if __name__ == "__main__":
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
-    init_button(dp)
+    init_app(dp)
 
     updater.start_polling()
 
