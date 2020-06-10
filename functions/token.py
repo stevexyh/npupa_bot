@@ -11,12 +11,22 @@
 '''
 
 TOKEN_FILE = './token'
+WEATHER_KEY = './weather_key'
 
 
 def get_token():
     '''Get token from files'''
     token = ''
     with open(TOKEN_FILE, 'r') as f:
+        token = f.readline().strip()
+
+    return token
+
+
+def get_weather_key():
+    '''Get weather api key from files'''
+    token = ''
+    with open(WEATHER_KEY, 'r') as f:
         token = f.readline().strip()
 
     return token

@@ -1,5 +1,8 @@
+**/__pycache__/
+**/*.log
+**/*.key
 .DS_Store
 token
-**/__pycache__/
+weather_key
 .test/
 nohup.out

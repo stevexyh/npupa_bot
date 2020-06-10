@@ -78,4 +78,3 @@ def init_message(dp):
     # on noncommand i.e message - echo the message on Telegram
     # dp.add_handler(MessageHandler(Filters.text, echo))
     dp.add_handler(MessageHandler(Filters.text, answer))
-    # pass
